@@ -5,8 +5,8 @@ author: Juan David Argüello Plata, jdarguello
 inputs:
   repos:
     description: List of repositories (from Azure or GitHub) with their login information
-    required: false
-    default: '1'
+    required: true
+    #default: '1'
 
 runs:
   using: 'composite'
