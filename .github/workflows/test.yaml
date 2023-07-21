@@ -24,5 +24,6 @@ jobs:
       id: run_action
       uses: ./
       with: 
-        repos: ${{ matrix }}
+        repos: toJSON(matrix)
+            
 
