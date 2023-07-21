@@ -5,12 +5,14 @@ author: Juan David Argüello Plata, jdarguello
 inputs:
   repos:
     description: List of repositories (from Azure or GitHub) with their login information
-    required: true
+    required: false
+    default: '1'
 
 runs:
   using: 'composite'
   steps:
-    - name: Checkout parent repository - ${{ inputs.repos.subsidiary }}
+    #- name: Checkout parent repository - ${{ inputs.repos.subsidiary }}
+    - name: Checkout parent repository
       shell: bash
       run: |
         echo 'hola' 
