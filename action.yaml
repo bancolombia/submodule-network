@@ -1,0 +1,16 @@
+name: GitHub Action Submodule Network
+description: Automatically updates the app parents of each subsidiary when the core is updated
+author: Juan David Argüello Plata, jdarguello
+
+inputs:
+  repos:
+    description: List of repositories (from Azure or GitHub) with their login information
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout parent repository - ${{ inputs.repos.subsidiary }}
+      shell: bash
+      run: |
+        echo 'hola' 
