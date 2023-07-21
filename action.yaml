@@ -15,4 +15,4 @@ runs:
     - name: Checkout parent repository
       shell: bash
       run: |
-        echo 'hola' 
+        echo ${{ inputs.repos }} 
