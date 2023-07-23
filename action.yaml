@@ -3,16 +3,36 @@ description: Automatically updates the app parents of each subsidiary when the c
 author: Juan David Argüello Plata, jdarguello
 
 inputs:
-  repos:
-    description: List of repositories (from Azure or GitHub) with their login information
+  platform:
+    description: either 'GitHub' or 'Azure'
+    required: false
+    default: GitHub
+  subsidiary_repo_url:
+    description: 'GitHub: owner/repo  -  Azure: https://... '
     required: true
-    #default: '1'
+  branch:
+    description: branch of the submodule
+    required: false
+    default: main
+  subsidiary_token:
+    description: token (from GitHub or Azure) to update the submodule
+    required: true
 
 runs:
   using: 'composite'
   steps:
-    #- name: Checkout parent repository - ${{ inputs.repos.subsidiary }}
-    - name: Checkout parent repository
-      shell: bash
-      run: |
-        echo ${{ inputs.repos }} 
+    - name: Update subsidiary - GitHub
+      if: inputs.platform == 'GitHub'
+      uses: PaulRitter/github-action-create-commit-parent-submodule@v1
+      with:
+        github_token: ${{ inputs.subsidiary_token }}
+        parent_repository: ${{ inputs.subsidiary_repo_url }}
+        parent_branch: ${{ inputs.branch }}
+    - name: Checkout subsidiary - Azure
+      if: inputs.platform == 'Azure'
+      uses: bancolombia/checkout-azure-repo@v1.0.0
+      with: 
+        token: xample
+        username: john_doe
+        password: etc
+      
