@@ -21,7 +21,7 @@ jobs:
     steps:
     #- uses: actions/checkout@v2
     - name: Checkout subsidiary - Azure
-      uses: bancolombia/checkout-azure-repo@v1.0.0
+      uses: bancolombia/checkout-azure-repo@v1
       with: 
         token: xample
         username: john_doe
