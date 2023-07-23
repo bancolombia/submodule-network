@@ -10,13 +10,18 @@ inputs:
   subsidiary_repo_url:
     description: 'GitHub: owner/repo  -  Azure: https://... '
     required: true
+  subsidiary_token:
+    description: token (from GitHub or Azure) to update the submodule
+    required: true
+  subsidiary_repo_username:
+    description: (Only required for Azure Repos) username for the checkout process
+    required: false
+    default: ''
   branch:
     description: branch of the submodule
     required: false
     default: main
-  subsidiary_token:
-    description: token (from GitHub or Azure) to update the submodule
-    required: true
+  
 
 runs:
   using: 'composite'
@@ -30,9 +35,9 @@ runs:
         parent_branch: ${{ inputs.branch }}
     - name: Checkout subsidiary - Azure
       if: inputs.platform == 'Azure'
-      uses: bancolombia/checkout-azure-repo@v1.0.0
+      uses: bancolombia/checkout-azure-repo@v1
       with: 
-        token: xample
+        token: ${{ inputs.subsidiary_token }}
         username: john_doe
         password: etc
       

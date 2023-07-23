@@ -19,17 +19,11 @@ jobs:
             repo_url: BANISTMO_URL
             rama: BANISTMO_BRANCH
     steps:
-    #- uses: actions/checkout@v2
-    - name: Checkout subsidiary - Azure
-      uses: bancolombia/checkout-azure-repo@v1
+    - uses: actions/checkout@v2
+    - name: run action
+      id: run_action
+      uses: ./
       with: 
-        token: xample
-        username: john_doe
-        password: etc
-    #- name: run action
-    #  id: run_action
-    #  uses: ./
-    #  with: 
-    #    platform: ${{ matrix.plataforma }}
+        platform: ${{ matrix.plataforma }}
         
 
