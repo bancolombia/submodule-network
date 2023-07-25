@@ -3,12 +3,8 @@ description: Automatically updates the app parents of each subsidiary when the c
 author: Juan David Argüello Plata, jdarguello
 
 inputs:
-  platform:
-    description: either 'GitHub' or 'Azure'
-    required: false
-    default: GitHub
   subsidiary_repo_url:
-    description: 'GitHub: owner/repo  -  Azure: https://... '
+    description: 'GitHub: owner/repo  -  Azure: <azure_domain>/repo '
     required: true
   subsidiary_token:
     description: token (from GitHub or Azure) to update the submodule
@@ -17,8 +13,19 @@ inputs:
     description: (Only required for Azure Repos) username for the checkout process
     required: false
     default: ''
-  branch:
+  platform:
+    description: either 'GitHub' or 'Azure'
+    required: false
+    default: GitHub
+  operation:
+    description: either 'push' or 'pull-request' operations
+    required: false
+    default: push
+  subsidiary_branch:
     description: branch of the submodule
+    required: false
+    default: main
+  parent_branch:
     required: false
     default: main
   
