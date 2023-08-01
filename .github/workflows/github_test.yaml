@@ -1,0 +1,34 @@
+name: Testing
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - plataforma: GitHub
+            filial: Bancolombia
+            repo_url: jdarguello/Valko-banistmo-Azure
+            rama: BANCOLOMBIA_BRANCH
+            token: BANCOLOMBIA_TOKEN
+          #- plataforma: Azure
+          #  filial: Banistmo
+          #  repo_url: BANISTMO_URL
+          #  rama: BANISTMO_BRANCH
+    steps:
+      - uses: actions/checkout@v2
+      - name: run action
+        id: run_action
+        uses: ./
+        with: 
+          platform: ${{ matrix.plataforma }}
+          subsidiary_repo_url: ${{ matrix.repo_url }}
+          subsidiary_token: ${{ secrets[matrix.token] }}
+          subsidiary_branch: ${{ vars[matrix.rama] }}
+          parent_branch: ${{ vars[matrix.rama] }}
+        
+

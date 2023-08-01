@@ -35,11 +35,13 @@ runs:
   steps:
     - name: Update subsidiary - GitHub
       if: inputs.platform == 'GitHub'
-      uses: PaulRitter/github-action-create-commit-parent-submodule@v1
+      uses: actions/checkout@v3
       with:
-        github_token: ${{ inputs.subsidiary_token }}
-        parent_repository: ${{ inputs.subsidiary_repo_url }}
-        parent_branch: ${{ inputs.branch }}
+        token: ${{ inputs.subsidiary_token }}
+        repository: ${{ inputs.subsidiary_repo_url }}
+        ref: ${{ inputs.branch }}
+        submodules: true
+        fetch-depth: 0
     - name: Checkout subsidiary - Azure
       if: inputs.platform == 'Azure'
       uses: bancolombia/checkout-azure-repo@v1
@@ -47,4 +49,12 @@ runs:
         token: ${{ inputs.subsidiary_token }}
         username: john_doe
         password: etc
-      
+    - name: Create new commit and push changes
+      if: inputs.operation == 'push'
+      shell: bash
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git submodule update --remote
+        git commit -am "updating submodules"
+        git push
