@@ -20,7 +20,7 @@ jobs:
           #  repo_url: BANISTMO_URL
           #  rama: BANISTMO_BRANCH
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: run action
         id: run_action
         uses: ./
