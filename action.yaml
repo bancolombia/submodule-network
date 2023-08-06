@@ -2,6 +2,10 @@ name: GitHub Action Submodule Network
 description: Automatically updates the app of each subsidiary when the core is updated
 author: Juan David Argüello Plata, jdarguello
 
+branding:
+  icon: 'Briefcase'
+  color: 'blue'
+
 inputs:
   subsidiary_repo_url:
     description: 'GitHub: owner/repo  -  Azure: <azure_domain>/repo '
