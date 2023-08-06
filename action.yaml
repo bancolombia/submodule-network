@@ -1,14 +1,10 @@
 name: GitHub Action Submodule Network
-description: Automatically updates the app parents of each subsidiary when the core is updated
+description: Automatically updates the app of each subsidiary when the core is updated
 author: Juan David Argüello Plata, jdarguello
 
 inputs:
-  platform:
-    description: either 'GitHub' or 'Azure'
-    required: false
-    default: GitHub
   subsidiary_repo_url:
-    description: 'GitHub: owner/repo  -  Azure: https://... '
+    description: 'GitHub: owner/repo  -  Azure: <azure_domain>/repo '
     required: true
   subsidiary_token:
     description: token (from GitHub or Azure) to update the submodule
@@ -17,10 +13,24 @@ inputs:
     description: (Only required for Azure Repos) username for the checkout process
     required: false
     default: ''
-  branch:
+  platform:
+    description: either 'GitHub' or 'Azure'
+    required: false
+    default: GitHub
+  operation:
+    description: either 'push' or 'pull-request' operations
+    required: false
+    default: push
+  subsidiary_branch:
     description: branch of the submodule
     required: false
     default: main
+  parent_branch:
+    required: false
+    default: main
+  default_message:
+    required: false
+    default: 'bancolombia-dependabot: updating submodules'
   
 
 runs:
@@ -28,11 +38,13 @@ runs:
   steps:
     - name: Update subsidiary - GitHub
       if: inputs.platform == 'GitHub'
-      uses: PaulRitter/github-action-create-commit-parent-submodule@v1
+      uses: actions/checkout@v3
       with:
-        github_token: ${{ inputs.subsidiary_token }}
-        parent_repository: ${{ inputs.subsidiary_repo_url }}
-        parent_branch: ${{ inputs.branch }}
+        token: ${{ inputs.subsidiary_token }}
+        repository: ${{ inputs.subsidiary_repo_url }}
+        ref: ${{ inputs.branch }}
+        submodules: true
+        fetch-depth: 0
     - name: Checkout subsidiary - Azure
       if: inputs.platform == 'Azure'
       uses: bancolombia/checkout-azure-repo@v1
@@ -40,4 +52,12 @@ runs:
         token: ${{ inputs.subsidiary_token }}
         username: john_doe
         password: etc
-      
+    - name: Create new commit and push changes
+      if: inputs.operation == 'push'
+      shell: bash
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git submodule update --remote
+        git commit -am "${{ inputs.default_message }}"
+        git push
