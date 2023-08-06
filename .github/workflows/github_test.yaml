@@ -12,7 +12,7 @@ jobs:
         include:
           - plataforma: GitHub
             filial: Bancolombia
-            repo_url: jdarguello/Valko-banistmo-Azure
+            repo_url: jdarguello/Valko_Banistmo
             rama: BANCOLOMBIA_BRANCH
             token: BANCOLOMBIA_TOKEN
           #- plataforma: Azure

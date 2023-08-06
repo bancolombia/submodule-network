@@ -1,5 +1,5 @@
 name: GitHub Action Submodule Network
-description: Automatically updates the app parents of each subsidiary when the core is updated
+description: Automatically updates the app of each subsidiary when the core is updated
 author: Juan David Argüello Plata, jdarguello
 
 inputs:
